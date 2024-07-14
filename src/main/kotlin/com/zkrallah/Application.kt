@@ -17,4 +17,5 @@ fun Application.module() {
     configurePutRouting()
     configurePatchRouting()
     configureMultipartRouting()
+    configureSerialization()
 }

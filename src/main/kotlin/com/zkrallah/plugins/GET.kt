@@ -3,23 +3,11 @@ package com.zkrallah.plugins
 import com.zkrallah.model.Complex
 import com.zkrallah.model.Post
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
-import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.serialization.json.Json
 
 fun Application.configureGetRouting() {
-    install(ContentNegotiation) {
-        json(
-            Json {
-                // Configure Kotlin serialization here if needed
-                encodeDefaults = true
-            }
-        )
-    }
-
     routing {
 
         // Void response
@@ -41,6 +29,26 @@ fun Application.configureGetRouting() {
                 body = "Random post body."
             )
             call.respond(HttpStatusCode.OK, post)
+        }
+
+        // List response
+        get("/posts") {
+            val post1 = Post(
+                id = 21,
+                userId = 1,
+                title = "Title",
+                body = "Random post body."
+            )
+            val post2 = Post(
+                id = 22,
+                userId = 2,
+                title = "Title2",
+                body = "Random post body2."
+            )
+
+            val posts = listOf(post1, post2)
+
+            call.respond(HttpStatusCode.OK, posts)
         }
 
         // Params response
